@@ -150,7 +150,7 @@ for i in range(phi.shape[0]):
             try:
                 rsr.add(forms.Gaussian(group=physical.xy_distance,
                                        feature=features.Angle(at[i], at[j], at[j + 1]),
-                                       mean=phi_value, stdev=0.1))
+                                       mean=phi_value, stdev=0.1)) #Kept stdevs like in Modeller manual's example when applying restraints
                 rsr.add(forms.Gaussian(group=physical.xy_distance,
                                        feature=features.Angle(at[i], at[j], at[j + 1]),
                                        mean=theta_value, stdev=0.1))
@@ -177,7 +177,7 @@ try:
     opt.optimize(mdl, max_iterations=1000, min_atom_shift=0.0001)
     print("Model optimized.")
 except Exception as e:
-    print(f"Error during optimization: {e}")
+    print(f"Error during optimization: {e}") # Was useful when debugging
 
 # Creating output directory if it does not exist
 output_dir = 'ModellerOutput'

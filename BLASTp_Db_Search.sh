@@ -4,7 +4,7 @@
 # Script Name: BLASTp_Db_Search.sh To search E.coli R388 T4SS Proteins Against pNOB8 Database
 # Description: This script performs BLASTp searches for E.coli R388 T4SS 
 #              proteins against a BLAST database created from the pNOB8 plasmid CDS sequences.
-#              The script extracts CDS sequences from a GenBank file, creates a
+#              The script extracts CDS sequences from the pNOB8 GenBank file, creates a
 #              BLAST database and executes BLASTp searches with specified proteins.
 #
 # References:
@@ -29,7 +29,7 @@ protein_path="/home/ib156/Desktop/Independant_research/E.coli"
 output_dir="/home/ib156/Desktop/Independant_research/results_w_qcov"
 mkdir -p "$output_dir"
 
-# Create an associative array for the protein files with their directories
+# Creating an associative array for the protein files with their directories
 declare -A proteins=(
     ["Relaxase_TrwC"]="Relaxase_TrwC/Q47673.fasta"
     ["VirB1_TrwN"]="VirB1_TrwN/Q6I6C7.fasta"
@@ -74,14 +74,14 @@ with open(pNOB8_fasta, 'w') as pNOB8_handle:
     print(f"CDS sequences have been extracted and written to {pNOB8_fasta}")
 EOF
 
-# Create BLAST database for pNOB8
+# Creating BLAST database for pNOB8
 if [ -f "pNOB8_cds.fasta" ] && [ -s "pNOB8_cds.fasta" ]; then
     makeblastdb -in pNOB8_cds.fasta -dbtype prot -out pNOB8_db
 else
     echo "pNOB8_cds.fasta is missing or empty. Skipping pNOB8 database creation."
 fi
 
-# Perform BLAST search for each protein from E.coli's R388 T4SS against the pNOB8 database
+# Performing BLAST search for each protein from E.coli's R388 T4SS against the pNOB8 database
 for protein in "${!proteins[@]}"; do
     protein_file="${protein_path}/${proteins[$protein]}"
     if [ -f "$protein_file" ]; then
